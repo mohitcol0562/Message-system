@@ -220,17 +220,7 @@ TO: <input type="text" name="frnd_username" placeholder="Friend Username"> <br>
 
 <th style="border-right: 1px solid black; padding-right: 15px;border-bottom: 1px solid black";>From User</th>
 <?php
-//validate_msg_page($error);
 
-	
-	/*if(isset($_POST['frnd_username']) && isset($_POST['frnd_username']))
-		{
-			process_message_page($_SESSION['username'], $error);
-			
-			//$_SESSION['frnd_username'] = $_POST['frnd_username'];
-			//$_SESSION['message'] = $_POST['message'];
-			unset($_SESSION['frnd_username']);
-			unset($_SESSION['message']);*/
 			
 				$user_data = message_fetch($_SESSION['username']);
 				if($user_data)
@@ -322,10 +312,6 @@ function validate_message_page($error)
 function process_message_page($error= array())
 {
 	validate_message_page($error);
-	/*if(!$error)
-	{
-		header("Location: messages.php");
-	}*/
 }
 ?>
 
@@ -359,15 +345,9 @@ function  message_store($username)
 	if(inbox_fetch($username))
 	{
 		$row = inbox_fetch($username);
-		
-		//$inbox= inbox_fetch($_SESSION['username']);
-		//$result = mysql_query("SELECT * FROM inbox WHERE username = :username");
+	
 		foreach($row as $key => $value)
 		{
-			/*echo "<pre>";
-			echo "frm user data line  352 ".$value['frm_user']."<br>";
-			echo "frm user data line  352 ".$value['msg']."<br>";
-			echo "</pre>";*/
 			
 
 					$frm_user = $value['frm_user'];
@@ -387,10 +367,7 @@ function  message_store($username)
 							$st->bindValue(':inb_id', $inb_id, PDO::PARAM_INT);
 							$st->execute();
 							$conn= NULL;
-							/*if(!$st->execute())
-							{
-								echo "Error occuring line 312 n executing ";
-							}*/
+							
 						}
 						catch(PDOException $e){
 							echo "line 453 Query failed ".$e->getMessage();
@@ -402,15 +379,8 @@ function  message_store($username)
 	if(outbox_fetch($username))
 	{
 		$row = outbox_fetch($username);
-		
-		//$inbox= inbox_fetch($_SESSION['username']);
-		//$result = mysql_query("SELECT * FROM inbox WHERE username = :username");
 		foreach($row as $key => $value)
 		{
-			/*echo "<pre>";
-			echo "frm user data line  422 ".$value['to_user']."<br>";
-			echo "frm user data line  422 ".$value['msg']."<br>";
-			echo "</pre>";*/
 			
 					$to_user = $value['to_user'];
 					$msg = $value['msg'];
@@ -427,10 +397,7 @@ function  message_store($username)
 							$st->bindValue(':out_id', $out_id, PDO::PARAM_INT);
 							$st->execute();
 							$conn= NULL;
-							/*if(!$st->execute())
-							{
-								echo "Error occuring line 312 n executing ";
-							}*/
+
 						}
 						catch(PDOException $e){
 							echo "line 444 Query failed ".$e->getMessage();
@@ -485,7 +452,6 @@ function inbox_store($frm_user, $username, $msg)
 
 function inbox_fetch( $username)
 {
-	//if(inbox_store($frm_user, $username, $msg))
 	{
 		$conn = connection();
 		$sql = "SELECT * FROM inbox WHERE username = :username ORDER BY time DESC";
